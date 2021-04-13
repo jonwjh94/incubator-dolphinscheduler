@@ -117,6 +117,7 @@
         <servlet-api.version>2.5</servlet-api.version>
         <swagger.version>1.9.3</swagger.version>
         <springfox.version>2.9.2</springfox.version>
+        <presto.version>322</presto.version>
     </properties>
 
     <dependencyManagement>

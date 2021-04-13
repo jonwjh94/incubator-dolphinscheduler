@@ -54,6 +54,8 @@ public class DataSourceFactory {
           return JSONUtils.parseObject(parameter, SQLServerDataSource.class);
         case DB2:
           return JSONUtils.parseObject(parameter, DB2ServerDataSource.class);
+        case TRINO:
+          return JSONUtils.parseObject(parameter, TrinoDataSource.class);
         default:
           return null;
       }
@@ -93,6 +95,9 @@ public class DataSourceFactory {
         break;
       case DB2:
         Class.forName(Constants.COM_DB2_JDBC_DRIVER);
+        break;
+      case TRINO:
+        Class.forName(Constants.IO_PRESTOSQL_JDBC_PRESTODRIVER);
         break;
       default:
         logger.error("not support sql type: {},can't load class", dbType);

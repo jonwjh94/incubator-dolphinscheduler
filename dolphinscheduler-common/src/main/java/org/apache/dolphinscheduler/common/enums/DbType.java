@@ -31,24 +31,28 @@ public enum DbType {
      * 5 oracle
      * 6 sqlserver
      * 7 db2
+     * 8 presto
      */
-    MYSQL(0, "mysql"),
-    POSTGRESQL(1, "postgresql"),
-    HIVE(2, "hive"),
-    SPARK(3, "spark"),
-    CLICKHOUSE(4, "clickhouse"),
-    ORACLE(5, "oracle"),
-    SQLSERVER(6, "sqlserver"),
-    DB2(7, "db2");
+    MYSQL(0, "mysql", "&"),
+    POSTGRESQL(1, "postgresql", "&"),
+    HIVE(2, "hive", ";"),
+    SPARK(3, "spark", ";"),
+    CLICKHOUSE(4, "clickhouse", "&"),
+    ORACLE(5, "oracle", "&"),
+    SQLSERVER(6, "sqlserver", ";"),
+    DB2(7, "db2", ";"),
+    TRINO(8, "trino", "&");
 
-    DbType(int code, String descp) {
+    DbType(int code, String descp, String separator) {
         this.code = code;
         this.descp = descp;
+        this.separator = separator;
     }
 
     @EnumValue
     private final int code;
     private final String descp;
+    private final String separator;
 
     public int getCode() {
         return code;
@@ -58,10 +62,14 @@ public enum DbType {
         return descp;
     }
 
+    public String getSeparator() {
+        return separator;
+    }
 
-    public static DbType of(int type){
-        for(DbType ty : values()){
-            if(ty.getCode() == type){
+
+    public static DbType of(int type) {
+        for (DbType ty : values()) {
+            if (ty.getCode() == type) {
                 return ty;
             }
         }
