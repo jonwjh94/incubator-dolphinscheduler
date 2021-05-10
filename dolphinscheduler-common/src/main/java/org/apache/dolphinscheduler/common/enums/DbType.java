@@ -31,7 +31,7 @@ public enum DbType {
      * 5 oracle
      * 6 sqlserver
      * 7 db2
-     * 8 presto
+     * 8 trino
      */
     MYSQL(0, "mysql", "&"),
     POSTGRESQL(1, "postgresql", "&"),

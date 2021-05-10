@@ -33,6 +33,7 @@
               <x-radio :label="'ORACLE'">ORACLE</x-radio>
               <x-radio :label="'SQLSERVER'">SQLSERVER</x-radio>
               <x-radio :label="'DB2'" class="radio-label-last" >DB2</x-radio>
+              <x-radio :label="'TRINO'" >TRINO</x-radio>
             </x-radio-group>
           </template>
         </m-list-box-f>
@@ -404,6 +405,9 @@
             break
           case 'DB2':
             defaultPort = '50000'
+            break
+          case 'TRINO':
+            defaultPort = '9630'
             break
           default:
             break
