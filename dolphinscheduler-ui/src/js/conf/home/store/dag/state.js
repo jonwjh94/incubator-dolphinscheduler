@@ -103,6 +103,11 @@ export default {
       id: 8,
       code: 'TRINO',
       disabled: false
+    },
+    {
+      id: 9,
+      code: 'SPARKSQL',
+      disabled: false
     }
   ],
   // Alarm interface
@@ -111,7 +116,5 @@ export default {
   instanceListS: [],
   // Operating state
   isDetails: false,
-  startup: {
-
-  }
+  startup: {}
 }

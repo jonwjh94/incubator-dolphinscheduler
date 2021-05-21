@@ -156,5 +156,14 @@
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.seasun.release</groupId>
+			<artifactId>bigdata-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.xishanju</groupId>
+			<artifactId>bigdata-common</artifactId>
+		</dependency>
 	</dependencies>
 </project>

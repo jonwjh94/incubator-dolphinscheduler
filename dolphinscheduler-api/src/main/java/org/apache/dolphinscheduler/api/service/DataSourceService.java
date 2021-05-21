@@ -412,6 +412,10 @@ public class DataSourceService extends BaseService {
                     datasource = JSON.parseObject(parameter, TrinoDataSource.class);
                     Class.forName(Constants.IO_PRESTOSQL_JDBC_PRESTODRIVER);
                     break;
+                case SPARKSQL:
+                    datasource = JSON.parseObject(parameter, SparkSQLDataSource.class);
+                    Class.forName(Constants.COM_SEASUN_RELEASE_JDBC_SPARKSQL_DRIVER);
+                    break;
                 default:
                     break;
             }
@@ -565,6 +569,9 @@ public class DataSourceService extends BaseService {
                 break;
             case TRINO:
                 sb.append(Constants.JDBC_TRINO).append(host).append(":").append(port);
+                break;
+            case SPARKSQL:
+                sb.append(Constants.JDBC_SPARKSQL).append(host).append(":").append(port);
                 break;
             default:
                 break;

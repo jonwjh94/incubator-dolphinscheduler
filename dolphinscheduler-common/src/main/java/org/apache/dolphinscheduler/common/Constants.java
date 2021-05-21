@@ -905,6 +905,7 @@ public final class Constants {
     public static final String COM_SQLSERVER_JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static final String COM_DB2_JDBC_DRIVER = "com.ibm.db2.jcc.DB2Driver";
     public static final String IO_PRESTOSQL_JDBC_PRESTODRIVER = "io.prestosql.jdbc.PrestoDriver";
+    public static final String COM_SEASUN_RELEASE_JDBC_SPARKSQL_DRIVER = "com.seasun.release.jdbc.sparksql.SparkSQLDriver";
 
     /**
      * database type
@@ -918,6 +919,7 @@ public final class Constants {
     public static final String SQLSERVER = "SQLSERVER";
     public static final String DB2 = "DB2";
     public static final String TRINO = "TRINO";
+    public static final String SPARKSQL = "SPARKSQL";
 
     /**
      * jdbc url
@@ -931,6 +933,7 @@ public final class Constants {
     public static final String JDBC_SQLSERVER = "jdbc:sqlserver://";
     public static final String JDBC_DB2 = "jdbc:db2://";
     public static final String JDBC_TRINO = "jdbc:presto://";
+    public static final String JDBC_SPARKSQL = "jdbc:spark://";
 
 
     public static final String ADDRESS = "address";

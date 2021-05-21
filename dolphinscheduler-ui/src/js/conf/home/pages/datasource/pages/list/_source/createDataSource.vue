@@ -34,6 +34,7 @@
               <x-radio :label="'SQLSERVER'">SQLSERVER</x-radio>
               <x-radio :label="'DB2'" class="radio-label-last" >DB2</x-radio>
               <x-radio :label="'TRINO'" >TRINO</x-radio>
+              <x-radio :label="'SPARKSQL'" >SPARKSQL</x-radio>
             </x-radio-group>
           </template>
         </m-list-box-f>
@@ -408,6 +409,9 @@
             break
           case 'TRINO':
             defaultPort = '9630'
+            break
+          case 'SPARKSQL':
+            defaultPort = '7777'
             break
           default:
             break

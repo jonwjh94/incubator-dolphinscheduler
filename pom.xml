@@ -118,6 +118,7 @@
         <swagger.version>1.9.3</swagger.version>
         <springfox.version>2.9.2</springfox.version>
         <presto.version>322</presto.version>
+        <bigdata.version>1.0.7</bigdata.version>
     </properties>
 
     <dependencyManagement>
@@ -543,6 +544,17 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>swagger-bootstrap-ui</artifactId>
                 <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasun.release</groupId>
+                <artifactId>bigdata-jdbc</artifactId>
+                <version>${bigdata.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xishanju</groupId>
+                <artifactId>bigdata-common</artifactId>
+                <version>${bigdata.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

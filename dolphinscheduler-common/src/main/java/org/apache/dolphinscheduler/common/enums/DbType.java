@@ -41,7 +41,8 @@ public enum DbType {
     ORACLE(5, "oracle", "&"),
     SQLSERVER(6, "sqlserver", ";"),
     DB2(7, "db2", ";"),
-    TRINO(8, "trino", "&");
+    TRINO(8, "trino", "&"),
+    SPARKSQL(9, "sparksql", ";");
 
     DbType(int code, String descp, String separator) {
         this.code = code;
