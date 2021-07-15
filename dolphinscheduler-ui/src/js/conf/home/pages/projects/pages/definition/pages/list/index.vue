@@ -61,7 +61,7 @@
         processListP: [],
         isLoading: true,
         searchParams: {
-          pageSize: 10,
+          pageSize: 30,
           pageNo: 1,
           searchVal: '',
           userId: ''
