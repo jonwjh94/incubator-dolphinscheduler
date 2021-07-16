@@ -118,7 +118,7 @@
         <swagger.version>1.9.3</swagger.version>
         <springfox.version>2.9.2</springfox.version>
         <presto.version>322</presto.version>
-        <bigdata.version>1.0.7</bigdata.version>
+        <bigdata.version>1.0.8</bigdata.version>
     </properties>
 
     <dependencyManagement>
@@ -1027,5 +1027,6 @@
         <module>dolphinscheduler-remote</module>
         <module>dolphinscheduler-service</module>
         <module>dolphinscheduler-plugin-api</module>
+        <module>dolphinscheduler-alert-plugin</module>
     </modules>
 </project>

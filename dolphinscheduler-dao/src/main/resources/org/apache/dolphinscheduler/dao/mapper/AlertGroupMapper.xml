@@ -44,4 +44,10 @@
         from t_ds_alertgroup
         order by update_time desc
     </select>
+    <select id="queryById" resultType="org.apache.dolphinscheduler.dao.entity.AlertGroup">
+        select
+            *
+        from t_ds_alertgroup
+        where id = #{id}
+    </select>
 </mapper>

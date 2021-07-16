@@ -18,16 +18,14 @@ package org.apache.dolphinscheduler.dao;
 
 
 import org.apache.dolphinscheduler.common.utils.StringUtils;
+import org.apache.dolphinscheduler.dao.entity.*;
+import org.apache.dolphinscheduler.dao.mapper.AlertGroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.apache.dolphinscheduler.common.enums.AlertStatus;
 import org.apache.dolphinscheduler.common.enums.AlertType;
 import org.apache.dolphinscheduler.common.enums.ShowType;
 import org.apache.dolphinscheduler.dao.datasource.ConnectionFactory;
-import org.apache.dolphinscheduler.dao.entity.Alert;
-import org.apache.dolphinscheduler.dao.entity.ProcessDefinition;
-import org.apache.dolphinscheduler.dao.entity.ProcessInstance;
-import org.apache.dolphinscheduler.dao.entity.User;
 import org.apache.dolphinscheduler.dao.mapper.AlertMapper;
 import org.apache.dolphinscheduler.dao.mapper.UserAlertGroupMapper;
 import org.slf4j.Logger;
@@ -48,10 +46,14 @@ public class AlertDao extends AbstractBaseDao {
     @Autowired
     private UserAlertGroupMapper userAlertGroupMapper;
 
+    @Autowired
+    private AlertGroupMapper alertGroupMapper;
+
     @Override
     protected void init() {
         alertMapper = ConnectionFactory.getInstance().getMapper(AlertMapper.class);
         userAlertGroupMapper = ConnectionFactory.getInstance().getMapper(UserAlertGroupMapper.class);
+        alertGroupMapper = ConnectionFactory.getInstance().getMapper(AlertGroupMapper.class);
     }
 
     /**
@@ -170,6 +172,15 @@ public class AlertDao extends AbstractBaseDao {
      */
     public List<User> listUserByAlertgroupId(int alertgroupId){
         return userAlertGroupMapper.listUserByAlertgroupId(alertgroupId);
+    }
+
+    /**
+     * get alert group by id
+     * @param alertGroupId
+     * @return
+     */
+    public AlertGroup getAlertGroupByAlertGroupId(int alertGroupId){
+        return alertGroupMapper.queryById(alertGroupId);
     }
 
     /**

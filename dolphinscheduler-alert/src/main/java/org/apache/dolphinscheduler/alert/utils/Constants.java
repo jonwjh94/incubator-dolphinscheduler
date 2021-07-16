@@ -23,6 +23,7 @@ public class Constants {
     private Constants() {
         throw new IllegalStateException("Constants class");
     }
+
     /**
      * alert properties path
      */
@@ -67,7 +68,7 @@ public class Constants {
 
     public static final String MAIL_SMTP_SSL_ENABLE = "mail.smtp.ssl.enable";
 
-    public static final String MAIL_SMTP_SSL_TRUST="mail.smtp.ssl.trust";
+    public static final String MAIL_SMTP_SSL_TRUST = "mail.smtp.ssl.trust";
 
     public static final String TEXT_HTML_CHARSET_UTF_8 = "text/html;charset=utf-8";
 
@@ -161,6 +162,8 @@ public class Constants {
 
     public static final String TABLE_BODY_HTML_TAIL = "</table></body></html>";
 
+    public static final String FEISHU_ENABLE = "feishu.enable";
+
     /**
      * plugin config
      */
@@ -177,4 +180,8 @@ public class Constants {
     public static final String PLUGIN_DEFAULT_EMAIL_RECEIVERCCS = "receiverCcs";
 
     public static final String RETMAP_MSG = "msg";
+
+    public static final String PLUGIN_FEISHU = "feishu";
+    public static final String PLUGIN_FEISHU_CH = "飞书";
+    public static final String PLUGIN_FEISHU_EN = "feishu";
 }

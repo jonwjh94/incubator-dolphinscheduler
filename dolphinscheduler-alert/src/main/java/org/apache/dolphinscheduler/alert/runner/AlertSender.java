@@ -21,6 +21,7 @@ import org.apache.dolphinscheduler.common.enums.AlertStatus;
 import org.apache.dolphinscheduler.common.plugin.PluginManager;
 import org.apache.dolphinscheduler.dao.AlertDao;
 import org.apache.dolphinscheduler.dao.entity.Alert;
+import org.apache.dolphinscheduler.dao.entity.AlertGroup;
 import org.apache.dolphinscheduler.dao.entity.User;
 import org.apache.dolphinscheduler.plugin.api.AlertPlugin;
 import org.apache.dolphinscheduler.plugin.model.AlertData;
@@ -58,6 +59,7 @@ public class AlertSender {
         Map<String, Object> retMaps = null;
         for (Alert alert : alertList) {
             users = alertDao.listUserByAlertgroupId(alert.getAlertGroupId());
+            AlertGroup alertGroup = alertDao.getAlertGroupByAlertGroupId(alert.getAlertGroupId());
 
             // receiving group list
             List<String> receviersList = new ArrayList<>();
@@ -79,9 +81,19 @@ public class AlertSender {
             alertInfo.setAlertData(alertData);
 
             alertInfo.addProp("receivers", receviersList);
+            alertInfo.addProp("description",alertGroup.getDescription());
 
-            AlertPlugin emailPlugin = pluginManager.findOne(Constants.PLUGIN_DEFAULT_EMAIL);
-            retMaps = emailPlugin.process(alertInfo);
+//            AlertPlugin emailPlugin = pluginManager.findOne(Constants.PLUGIN_DEFAULT_EMAIL);
+//            retMaps = emailPlugin.process(alertInfo);
+            for (Map.Entry<String, AlertPlugin> entry : pluginManager.findAll().entrySet()) {
+                String pluginName = entry.getKey();
+                AlertPlugin plugin = entry.getValue();
+                if (Constants.PLUGIN_DEFAULT_EMAIL.equals(pluginName)) {
+                    retMaps = plugin.process(alertInfo);
+                } else {
+                    plugin.process(alertInfo);
+                }
+            }
 
             if (retMaps == null) {
                 alertDao.updateAlert(AlertStatus.EXECUTION_FAILURE, "alert send error", alert.getId());
