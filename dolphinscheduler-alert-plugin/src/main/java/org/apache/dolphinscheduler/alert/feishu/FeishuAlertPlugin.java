@@ -1,7 +1,5 @@
 package org.apache.dolphinscheduler.alert.feishu;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.dolphinscheduler.alert.utils.Constants;
@@ -36,6 +34,8 @@ public class FeishuAlertPlugin implements AlertPlugin {
     private static final Logger logger = LoggerFactory.getLogger(FeishuAlertPlugin.class);
 
     private static final Boolean FEISHU_ENABLE = PropertyUtils.getBoolean(Constants.FEISHU_ENABLE);
+    private static final String FEISHU_WEBHOOK = PropertyUtils.getString(Constants.FEISHU_WEBHOOK);
+    private static final String FEISHU_SECRET_KEY = PropertyUtils.getString(Constants.FEISHU_SECRET_KEY);
     private static final String ALGORITHM = "HmacSHA256";
 
     private PluginName pluginName;
@@ -59,31 +59,27 @@ public class FeishuAlertPlugin implements AlertPlugin {
     @Override
     public Map<String, Object> process(AlertInfo info) {
         AlertData alertData = info.getAlertData();
-        String description = (String) info.getProp("description");
-        try {
-            JSONObject feishu = JSON.parseObject(description).getJSONObject("feishu");
-            String webhook = feishu.getString("webhook");
-            String secretKey = feishu.getString("secretKey");
-            if (FEISHU_ENABLE&&webhook!=null&&secretKey!=null){
-                long timestamp = System.currentTimeMillis() / 1000;
-                SecretKeySpec keySpec = new SecretKeySpec((timestamp + "\n" + secretKey).getBytes(), ALGORITHM);
-                Mac hmacSha256 = Mac.getInstance(ALGORITHM);
-                hmacSha256.init(keySpec);
-                byte[] bytes = hmacSha256.doFinal();
-                String s = Base64.encodeBase64String(bytes);
-                JSONObject json = new JSONObject();
-                json.put("timestamp", timestamp + "");
-                json.put("sign", s);
-                json.put("msg_type", "text");
-                json.put("content", new JSONObject() {{
-                    put("text", "调度告警：\n" + alertData.getContent());
-                }});
-                sendRequest(webhook, json.toJSONString());
+        if (FEISHU_ENABLE) {
+            try {
+                if (FEISHU_WEBHOOK != null && FEISHU_SECRET_KEY != null) {
+                    long timestamp = System.currentTimeMillis() / 1000;
+                    SecretKeySpec keySpec = new SecretKeySpec((timestamp + "\n" + FEISHU_SECRET_KEY).getBytes(), ALGORITHM);
+                    Mac hmacSha256 = Mac.getInstance(ALGORITHM);
+                    hmacSha256.init(keySpec);
+                    byte[] bytes = hmacSha256.doFinal();
+                    String s = Base64.encodeBase64String(bytes);
+                    JSONObject json = new JSONObject();
+                    json.put("timestamp", timestamp + "");
+                    json.put("sign", s);
+                    json.put("msg_type", "text");
+                    json.put("content", new JSONObject() {{
+                        put("text", "调度告警：\n" + alertData.getContent());
+                    }});
+                    sendRequest(FEISHU_WEBHOOK, json.toJSONString());
+                }
+            } catch (InvalidKeyException | NoSuchAlgorithmException e) {
+                logger.error("The encryption has failed.", e);
             }
-        } catch (InvalidKeyException | NoSuchAlgorithmException e) {
-            logger.error("The encryption has failed.", e);
-        } catch (JSONException e) {
-            logger.error(e.getMessage(), e);
         }
         return null;
     }

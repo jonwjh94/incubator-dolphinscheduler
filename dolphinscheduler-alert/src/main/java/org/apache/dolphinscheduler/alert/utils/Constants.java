@@ -163,6 +163,8 @@ public class Constants {
     public static final String TABLE_BODY_HTML_TAIL = "</table></body></html>";
 
     public static final String FEISHU_ENABLE = "feishu.enable";
+    public static final String FEISHU_WEBHOOK = "feishu.webhook";
+    public static final String FEISHU_SECRET_KEY = "feishu.secretKey";
 
     /**
      * plugin config
