@@ -26,6 +26,7 @@ import org.apache.dolphinscheduler.common.utils.placeholder.PlaceholderUtils;
 import org.apache.dolphinscheduler.common.utils.placeholder.TimePlaceholderUtils;
 
 import java.sql.PreparedStatement;
+import java.sql.Time;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -139,7 +140,7 @@ public class ParameterUtils {
         } else if (dataType.equals(DataType.DATE)) {
             stmt.setDate(index, java.sql.Date.valueOf(value));
         } else if (dataType.equals(DataType.TIME)) {
-            stmt.setString(index, value);
+            stmt.setTime(index, Time.valueOf(value));
         } else if (dataType.equals(DataType.TIMESTAMP)) {
             stmt.setTimestamp(index, java.sql.Timestamp.valueOf(value));
         } else if (dataType.equals(DataType.BOOLEAN)) {

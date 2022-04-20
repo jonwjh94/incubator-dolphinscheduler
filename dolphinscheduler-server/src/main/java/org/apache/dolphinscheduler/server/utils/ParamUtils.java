@@ -28,6 +28,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * param utils
@@ -73,16 +75,19 @@ public class ParamUtils {
             Map.Entry<String, Property> en = iter.next();
             Property property = en.getValue();
 
-            if (StringUtils.isNotEmpty(property.getValue())
-                    && property.getValue().startsWith("$")){
-                /**
-                 *  local parameter refers to global parameter with the same name
-                 *  note: the global parameters of the process instance here are solidified parameters,
-                 *  and there are no variables in them.
-                 */
-                String val = property.getValue();
-                val  = ParameterUtils.convertParameterPlaceholders(val, timeParams);
-                property.setValue(val);
+            if (StringUtils.isNotEmpty(property.getValue())){
+                Pattern pattern = Pattern.compile("\\$\\{(.*)\\}");
+                Matcher matcher = pattern.matcher(property.getValue());
+                if (matcher.find()){
+                    /**
+                     *  local parameter refers to global parameter with the same name
+                     *  note: the global parameters of the process instance here are solidified parameters,
+                     *  and there are no variables in them.
+                     */
+                    String val = property.getValue();
+                    val  = ParameterUtils.convertParameterPlaceholders(val, timeParams);
+                    property.setValue(val);
+                }
             }
         }
 
