@@ -602,35 +602,27 @@ public class HadoopUtils implements Closeable {
         public static String getAcitveRMName(String rmIds) {
 
             String[] rmIdArr = rmIds.split(Constants.COMMA);
+            String rmId1 = rmIdArr[0];
+            String rmId2 = rmIdArr[1];
 
             int activeResourceManagerPort = PropertyUtils.getInt(Constants.HADOOP_RESOURCE_MANAGER_HTTPADDRESS_PORT, 8088);
 
             String yarnUrl = "http://%s:" + activeResourceManagerPort + "/ws/v1/cluster/info";
 
-            String state = null;
             try {
-                /**
-                 * send http get request to rm1
-                 */
-                state = getRMState(String.format(yarnUrl, rmIdArr[0]));
-
-                if (Constants.HADOOP_RM_STATE_ACTIVE.equals(state)) {
-                    return rmIdArr[0];
-                } else if (Constants.HADOOP_RM_STATE_STANDBY.equals(state)) {
-                    state = getRMState(String.format(yarnUrl, rmIdArr[1]));
-                    if (Constants.HADOOP_RM_STATE_ACTIVE.equals(state)) {
-                        return rmIdArr[1];
-                    }
+                if (Constants.HADOOP_RM_STATE_ACTIVE.equals(getRMState(String.format(yarnUrl, rmId1)))) {
+                    return rmId1;
+                } else if (Constants.HADOOP_RM_STATE_ACTIVE.equals(getRMState(String.format(yarnUrl, rmId2)))) {
+                    return rmId2;
                 } else {
-                    return null;
+                    RuntimeException e = new RuntimeException("can not find any active resource manager.");
+                    logger.error("can not find any active resource manager.", e);
+                    throw e;
                 }
             } catch (Exception e) {
-                state = getRMState(String.format(yarnUrl, rmIdArr[1]));
-                if (Constants.HADOOP_RM_STATE_ACTIVE.equals(state)) {
-                    return rmIdArr[0];
-                }
+                logger.error("can not get active resource manager name.", e);
+                throw e;
             }
-            return null;
         }
 
 
