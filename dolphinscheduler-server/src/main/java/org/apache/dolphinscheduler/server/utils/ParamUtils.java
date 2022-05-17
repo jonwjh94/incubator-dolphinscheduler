@@ -76,7 +76,7 @@ public class ParamUtils {
             Property property = en.getValue();
 
             if (StringUtils.isNotEmpty(property.getValue())){
-                Pattern pattern = Pattern.compile("\\$\\{(.*)\\}");
+                Pattern pattern = Pattern.compile("\\$\\{.*\\}|\\$\\[.*\\]");
                 Matcher matcher = pattern.matcher(property.getValue());
                 if (matcher.find()){
                     /**
